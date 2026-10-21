@@ -1,6 +1,14 @@
-# Pokey 🔴⚪
+<p align="center">
+  <img src="Resources/AppIcon.png" width="128" alt="Pokey">
+</p>
 
-**Poke your Mac with the keyboard. Catch Pokémon while you're at it.**
+<h1 align="center">Pokey</h1>
+
+<p align="center"><b>Poke your Mac with the keyboard. Catch Pokémon while you're at it.</b></p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" width="88" alt="">
+</p>
 
 Pokey is a tiny menu bar app that lets you click anything on macOS without touching the mouse — buttons, links,
 menu bar items, status icons, even a random spot on a canvas. And every so often, a wild Pokémon pops out of the
@@ -34,6 +42,7 @@ day, then about one in three.
   up, then Gen 3 (Hoenn). To keep the hunt from dragging on, three out of ten encounters are drawn from the ones you
   haven't met yet.
 - **Shinies** show up 1 in 64 times, from any generation you've unlocked, wrapped in a gold outline.
+  <br><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6.png" width="88" alt="">
 - **The Pokédex window** shows every unlocked generation, with separate Normal and ✨ Shiny tabs. Pokémon you haven't
   met are black silhouettes; the ones you have show how many times you've met them. New arrivals get a red dot until
   you open the Pokédex.

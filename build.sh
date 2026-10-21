@@ -14,9 +14,10 @@ APP=build/Pokey.app
 
 swift build -c release
 rm -rf "$APP"
-mkdir -p "$APP/Contents/MacOS"
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp .build/release/Pokey "$APP/Contents/MacOS/"
 cp Info.plist "$APP/Contents/"
+cp Resources/AppIcon.icns "$APP/Contents/Resources/"
 if [[ "$IDENTITY" == "-" ]]; then
   codesign --force --sign - "$APP"
 else
