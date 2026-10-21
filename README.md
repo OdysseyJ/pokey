@@ -4,20 +4,23 @@
 
 <h1 align="center">Pokey</h1>
 
-<p align="center"><b>Poke your Mac with the keyboard. Catch Pokémon while you're at it.</b></p>
+<p align="center"><b>Move, click and scroll your Mac from the keyboard.</b></p>
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" width="88" alt="">
-</p>
+Pokey is a small menu bar app that turns the keyboard into your mouse. Press a shortcut and every button, link, menu
+bar item and status icon gets a short label — type it and it's clicked. Need a spot that isn't a button? Jump there on
+a lettered grid, or steer the pointer with `h j k l`. Scrolling, dragging, right-clicks and double-clicks all stay on
+the home row.
 
-Pokey is a tiny menu bar app that lets you click anything on macOS without touching the mouse — buttons, links,
-menu bar items, status icons, even a random spot on a canvas. And every so often, a wild Pokémon pops out of the
-thing you just clicked. Gotta click 'em all.
+- **Click anything by its label** — the front window, its menu bar, the status icons on the right, and open menus.
+- **Reach any pixel** with a grid or by steering the pointer, and see what you're about to click before you click it.
+- **Scroll and drag** without the trackpad.
+- **Works with any input source**, Korean included, and every shortcut is configurable.
+- And a small bonus: **a Pokédex** that slowly fills up as you click (see below).
 
 Inspired by [Homerow](https://www.homerow.app) and [Scoot](https://github.com/mjrusso/scoot), and built by someone who
 types on an HHKB and refuses to reach for the trackpad.
 
-## What it does
+## Modes
 
 | Default shortcut | Mode | How it works |
 |---|---|---|
@@ -33,7 +36,14 @@ letter is typed as a letter instead of triggering a mode.
 All shortcuts are configurable in **Settings** (click the Poké Ball in the menu bar), along with the language
 (English / 한국어) and launch at login.
 
-## The Pokédex
+## Bonus: the Pokédex
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" width="88" alt="">
+</p>
+
+A little reward for keeping your hands on the keyboard. It's entirely optional flavor — the clicking works the same
+without paying any attention to it.
 
 Each click has a chance to summon a Pokémon right where the hint label was — guaranteed on your first click of the
 day, then about one in three.
