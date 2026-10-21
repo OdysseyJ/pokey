@@ -29,7 +29,8 @@ final class OverlayModel {
 /// 넓은 것(줄·입력칸)은 왼쪽 끝 안쪽(보통 여백·아이콘 자리)에. centered 가 아니면 anchor 는 라벨의 왼쪽 끝.
 enum HintPlacement {
     static func anchor(for r: CGRect, screenTop: CGFloat) -> (anchor: CGPoint, centered: Bool) {
-        if r.minY <= screenTop + 2, r.height <= 34 { return (CGPoint(x: r.midX, y: r.maxY + 9), true) }
+        // 상태 아이콘은 메뉴바 위쪽에서 몇 pt 내려와 있다 — 여유를 둔다.
+        if r.minY <= screenTop + 6, r.height <= 34 { return (CGPoint(x: r.midX, y: r.maxY + 9), true) }
         if r.width <= 60, r.height <= 60 { return (CGPoint(x: r.minX + 2, y: r.minY + 2), true) }
         return (CGPoint(x: r.minX + 2, y: r.midY), false)
     }

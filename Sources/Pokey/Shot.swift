@@ -38,34 +38,10 @@ enum Shot {
         }
         let region = window.bounds
 
-        /// crop: 창 안에서 잘라 낼 부분(CG 좌표, 없으면 창 전체).
         func save(_ name: String, _ model: OverlayModel, crop: CGRect? = nil, extra: ((CGRect) -> Void)? = nil) {
-            let overlay = Overlay.render(model, region: region, pixelsWide: base.pixelsWide, pixelsHigh: base.pixelsHigh)
-            let out = NSBitmapImageRep(
-                bitmapDataPlanes: nil, pixelsWide: base.pixelsWide, pixelsHigh: base.pixelsHigh, bitsPerSample: 8,
-                samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0,
-                bitsPerPixel: 0)!
-            out.size = region.size
-            NSGraphicsContext.saveGraphicsState()
-            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: out)
-            let rect = CGRect(origin: .zero, size: region.size)
-            let cg = NSGraphicsContext.current!.cgContext
-            if let image = base.cgImage { cg.draw(image, in: rect) }
-            if let image = overlay.cgImage { cg.draw(image, in: rect) }
-            extra?(rect)
-            NSGraphicsContext.restoreGraphicsState()
-            var final = out
-            if let crop, let image = out.cgImage {
-                let scale = CGFloat(base.pixelsWide) / region.width
-                let local = crop.offsetBy(dx: -region.minX, dy: -region.minY).intersection(
-                    CGRect(origin: .zero, size: region.size))
-                let pixels = CGRect(
-                    x: local.minX * scale, y: local.minY * scale, width: local.width * scale, height: local.height * scale)
-                if let cut = image.cropping(to: pixels.integral) { final = NSBitmapImageRep(cgImage: cut) }
-            }
-            let path = (outDir as NSString).appendingPathComponent("\(name).png")
-            try? final.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: path))
-            print(path)
+            compose(
+                base: base, region: region, model: model, crop: crop, extra: extra,
+                path: (outDir as NSString).appendingPathComponent("\(name).png"))
         }
 
         AXCollector.shared.collect(pid: app.processIdentifier, bundleID: bundle, screens: Screens.all) { targets in
@@ -111,6 +87,82 @@ enum Shot {
             }
 
             MainActor.assumeIsolated { saveDex(to: (outDir as NSString).appendingPathComponent("pokedex.png")) }
+            exit(0)
+        }
+        RunLoop.main.run()
+    }
+
+    /// base(region 을 캡처한 그림) 위에 model 의 오버레이를 그려 path 에 저장한다. crop 은 region 안의 일부(CG 좌표).
+    private static func compose(
+        base: NSBitmapImageRep, region: CGRect, model: OverlayModel, crop: CGRect?, extra: ((CGRect) -> Void)?,
+        path: String
+    ) {
+        let overlay = Overlay.render(model, region: region, pixelsWide: base.pixelsWide, pixelsHigh: base.pixelsHigh)
+        let out = NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: base.pixelsWide, pixelsHigh: base.pixelsHigh, bitsPerSample: 8,
+            samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0,
+            bitsPerPixel: 0)!
+        out.size = region.size
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: out)
+        let rect = CGRect(origin: .zero, size: region.size)
+        let cg = NSGraphicsContext.current!.cgContext
+        if let image = base.cgImage { cg.draw(image, in: rect) }
+        if let image = overlay.cgImage { cg.draw(image, in: rect) }
+        extra?(rect)
+        NSGraphicsContext.restoreGraphicsState()
+        var final = out
+        if let crop, let image = out.cgImage {
+            let scale = CGFloat(base.pixelsWide) / region.width
+            let local = crop.offsetBy(dx: -region.minX, dy: -region.minY).intersection(CGRect(origin: .zero, size: region.size))
+            let pixels = CGRect(
+                x: local.minX * scale, y: local.minY * scale, width: local.width * scale, height: local.height * scale)
+            if let cut = image.cropping(to: pixels.integral) { final = NSBitmapImageRep(cgImage: cut) }
+        }
+        try? final.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: path))
+        print(path)
+    }
+
+    /// 메뉴바 띠: `Pokey --shot-menubar <out dir>` — 앞 앱의 메뉴와 오른쪽 상태 아이콘에 라벨이 붙은 모습.
+    /// 처음엔 캡처할 띠(x,y,w,h)를 알려 주고 끝난다: screencapture -x -R<x,y,w,h> <out dir>/menubar-base.png
+    static func menuBar(outDir: String) {
+        let front = NSWorkspace.shared.frontmostApplication
+        AXCollector.shared.refreshExtras()
+        Thread.sleep(forTimeInterval: 1.5)
+        AXCollector.shared.collect(
+            pid: front?.processIdentifier ?? 0, bundleID: front?.bundleIdentifier, screens: Screens.all
+        ) { targets in
+            let items = targets.filter { t in
+                let top = Screens.frame(containing: CGPoint(x: t.rect.midX, y: t.rect.midY)).minY
+                return t.rect.minY <= top + 6 && t.rect.height <= 34
+            }
+            // 메뉴 항목이 가장 많이 걸친 화면(메뉴바가 활성인 화면).
+            var screens = Screens.all
+            // SCREEN=<번호> 로 화면을 고를 수 있다(상태 아이콘은 주 화면 위치로 잡히곤 한다).
+            if let i = Int(ProcessInfo.processInfo.environment["SCREEN"] ?? ""), screens.indices.contains(i) {
+                screens = [screens[i]]
+            }
+            guard
+                let screen = screens.max(by: { a, b in
+                    items.filter { a.intersects($0.rect) }.count < items.filter { b.intersects($0.rect) }.count
+                }), !items.isEmpty
+            else {
+                print("no menu bar items")
+                exit(1)
+            }
+            let region = CGRect(x: screen.minX, y: screen.minY, width: screen.width, height: 58)
+            let basePath = (outDir as NSString).appendingPathComponent("menubar-base.png")
+            guard let base = NSBitmapImageRep(data: (try? Data(contentsOf: URL(fileURLWithPath: basePath))) ?? Data())
+            else {
+                print("strip \(Int(region.minX)),\(Int(region.minY)),\(Int(region.width)),\(Int(region.height))")
+                exit(2)
+            }
+            let model = OverlayModel()
+            let onScreen = items.filter { region.intersects($0.rect) }
+            model.hints = zip(Labels.make(onScreen.count), onScreen).map { (label: $0.0, rect: $0.1.rect) }
+            compose(
+                base: base, region: region, model: model, crop: nil, extra: nil,
+                path: (outDir as NSString).appendingPathComponent("menubar.png"))
             exit(0)
         }
         RunLoop.main.run()

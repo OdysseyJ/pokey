@@ -29,6 +29,11 @@ if CommandLine.arguments.count >= 3, CommandLine.arguments[1] == "--dump" {
     RunLoop.main.run()
 }
 
+if CommandLine.arguments.count >= 3, CommandLine.arguments[1] == "--shot-menubar" {
+    _ = NSApplication.shared
+    Shot.menuBar(outDir: CommandLine.arguments[2])
+}
+
 // README 스크린샷: `Pokey --shot <bundle id> <out dir>` — Shot.swift.
 if CommandLine.arguments.count >= 4, CommandLine.arguments[1] == "--shot" {
     _ = NSApplication.shared

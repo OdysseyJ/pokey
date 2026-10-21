@@ -6,6 +6,10 @@
 
 <p align="center"><b>Control your Mac without a mouse — and collect Pokémon along the way.</b></p>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" width="88" alt="">
+</p>
+
 Pokey is a small menu bar app that turns the keyboard into your mouse. Press a shortcut and every button, link, menu
 bar item and status icon gets a short label — type it and it's clicked. Need a spot that isn't a button? Jump there on
 a lettered grid, or steer the pointer with `h j k l`. Scrolling, dragging, right-clicks and double-clicks all stay on
@@ -33,6 +37,10 @@ Everywhere: `⇧` + arrows scrolls, `esc` gets you out. Labels are read straight
 with a Korean (or any) input source active. If you switch input sources with `⌃Space` and keep holding `⌃`, the next
 letter is typed as a letter instead of triggering a mode.
 
+Labels reach the system menu bar too — the front app's menus and every status icon on the right:
+
+<img src="docs/screenshots/menubar.png" alt="Labels on the menu bar and status icons">
+
 <table>
   <tr>
     <td width="50%"><b>Click Element</b> — every clickable thing gets a label<br><img src="docs/screenshots/element.png" alt="Click Element mode"></td>
@@ -48,10 +56,6 @@ All shortcuts are configurable in **Settings** (click the Poké Ball in the menu
 (English / 한국어) and launch at login.
 
 ## Bonus: the Pokédex
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" width="88" alt=""> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" width="88" alt="">
-</p>
 
 A little reward for keeping your hands on the keyboard. It's entirely optional flavor — the clicking works the same
 without paying any attention to it.
