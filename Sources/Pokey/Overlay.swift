@@ -69,7 +69,7 @@ final class Overlay {
             window.isReleasedWhenClosed = false
             // 창이 나타날 때 시스템 기본 애니메이션(옆에서 미끄러지듯 나옴) 없이 바로.
             window.animationBehavior = .none
-            window.contentView = OverlayView(model: model, screen: screen)
+            window.contentView = OverlayView(model: model, size: screen.frame.size) { Screens.cgFrame(screen) }
             return window
         }
     }
@@ -86,14 +86,35 @@ final class Overlay {
     }
 }
 
+extension Overlay {
+    /// 화면에 띄우지 않고 region(CG 좌표) 영역의 오버레이만 그림으로 — README 스크린샷용.
+    static func render(_ model: OverlayModel, region: CGRect, pixelsWide: Int, pixelsHigh: Int) -> NSBitmapImageRep {
+        let rep = NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: pixelsWide, pixelsHigh: pixelsHigh, bitsPerSample: 8, samplesPerPixel: 4,
+            hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+        rep.size = region.size
+        let view = OverlayView(model: model, size: region.size) { region }
+        NSGraphicsContext.saveGraphicsState()
+        // rep.size 를 region 크기로 두었으니 컨텍스트는 이미 점 단위다 — 뒤집기만 한다.
+        let cg = NSGraphicsContext(bitmapImageRep: rep)!.cgContext
+        cg.translateBy(x: 0, y: region.height)
+        cg.scaleBy(x: 1, y: -1)
+        NSGraphicsContext.current = NSGraphicsContext(cgContext: cg, flipped: true)
+        view.draw(view.bounds)
+        NSGraphicsContext.restoreGraphicsState()
+        return rep
+    }
+}
+
 private final class OverlayView: NSView {
     private let model: OverlayModel
-    private let screen: NSScreen
+    /// 이 뷰가 덮는 영역(CG 좌표) — 화면이면 그 화면, 스크린샷이면 그 창.
+    private let region: () -> CGRect
 
-    init(model: OverlayModel, screen: NSScreen) {
+    init(model: OverlayModel, size: CGSize, region: @escaping () -> CGRect) {
         self.model = model
-        self.screen = screen
-        super.init(frame: NSRect(origin: .zero, size: screen.frame.size))
+        self.region = region
+        super.init(frame: NSRect(origin: .zero, size: size))
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -106,7 +127,7 @@ private final class OverlayView: NSView {
     private static let hintStroke = NSColor(calibratedRed: 0.72, green: 0.55, blue: 0.05, alpha: 1)
 
     override func draw(_ dirtyRect: NSRect) {
-        let origin = Screens.cgFrame(screen).origin
+        let origin = region().origin
         func local(_ p: CGPoint) -> CGPoint { CGPoint(x: p.x - origin.x, y: p.y - origin.y) }
         func local(_ r: CGRect) -> CGRect { CGRect(origin: local(r.origin), size: r.size) }
 

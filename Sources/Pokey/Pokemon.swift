@@ -323,7 +323,7 @@ struct PokedexView: View {
     }
 }
 
-private struct DexCell: View {
+struct DexCell: View {
     @ObservedObject var dex = Pokedex.shared
     @ObservedObject var language = Language.shared
     let id: Int

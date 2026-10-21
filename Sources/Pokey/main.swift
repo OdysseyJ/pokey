@@ -29,6 +29,12 @@ if CommandLine.arguments.count >= 3, CommandLine.arguments[1] == "--dump" {
     RunLoop.main.run()
 }
 
+// README 스크린샷: `Pokey --shot <bundle id> <out dir>` — Shot.swift.
+if CommandLine.arguments.count >= 4, CommandLine.arguments[1] == "--shot" {
+    _ = NSApplication.shared
+    MainActor.assumeIsolated { Shot.run(bundle: CommandLine.arguments[2], outDir: CommandLine.arguments[3]) }
+}
+
 let app = NSApplication.shared
 let delegate = AppDelegate()
 app.delegate = delegate

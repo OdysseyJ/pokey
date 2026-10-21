@@ -268,21 +268,27 @@ final class Controller {
         let screens = Screens.all
         guard !screens.isEmpty else { return }
         gridScreen = min(gridScreen, screens.count - 1)
-        let f = screens[gridScreen]
+        cells = Self.gridCells(in: screens[gridScreen])
+        cellSize = cells.first?.rect.size ?? cellSize
+    }
+
+    /// f 를 26×26 이하의 칸으로 — 라벨 = 줄 글자 + 칸 글자.
+    static func gridCells(in f: CGRect) -> [(label: String, rect: CGRect)] {
         let alphabet = Labels.gridAlphabet
         let side = max(56, f.width / CGFloat(alphabet.count), f.height / CGFloat(alphabet.count))
         let cols = min(alphabet.count, Int((f.width / side).rounded(.up)))
         let rows = min(alphabet.count, Int((f.height / side).rounded(.up)))
-        cellSize = CGSize(width: f.width / CGFloat(cols), height: f.height / CGFloat(rows))
-        cells = []
+        let size = CGSize(width: f.width / CGFloat(cols), height: f.height / CGFloat(rows))
+        var cells: [(label: String, rect: CGRect)] = []
         for r in 0..<rows {
             for c in 0..<cols {
                 let rect = CGRect(
-                    x: f.minX + CGFloat(c) * cellSize.width, y: f.minY + CGFloat(r) * cellSize.height,
-                    width: cellSize.width, height: cellSize.height)
+                    x: f.minX + CGFloat(c) * size.width, y: f.minY + CGFloat(r) * size.height, width: size.width,
+                    height: size.height)
                 cells.append((label: String([alphabet[r], alphabet[c]]), rect: rect))
             }
         }
+        return cells
     }
 
     private func gridKey(_ code: Int64, _ flags: CGEventFlags) {

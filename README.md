@@ -33,6 +33,17 @@ Everywhere: `⇧` + arrows scrolls, `esc` gets you out. Labels are read straight
 with a Korean (or any) input source active. If you switch input sources with `⌃Space` and keep holding `⌃`, the next
 letter is typed as a letter instead of triggering a mode.
 
+<table>
+  <tr>
+    <td width="50%"><b>Click Element</b> — every clickable thing gets a label<br><img src="docs/screenshots/element.png" alt="Click Element mode"></td>
+    <td width="50%"><b>Grid</b> — jump to any spot by its cell<br><img src="docs/screenshots/grid.png" alt="Grid mode"></td>
+  </tr>
+  <tr>
+    <td><b>Free Move</b> — the element you'd click is outlined<br><img src="docs/screenshots/free.png" alt="Free Move mode"></td>
+    <td><b>Scroll</b> — the area that will scroll is outlined<br><img src="docs/screenshots/scroll.png" alt="Scroll mode"></td>
+  </tr>
+</table>
+
 All shortcuts are configurable in **Settings** (click the Poké Ball in the menu bar), along with the language
 (English / 한국어) and launch at login.
 
@@ -44,6 +55,11 @@ All shortcuts are configurable in **Settings** (click the Poké Ball in the menu
 
 A little reward for keeping your hands on the keyboard. It's entirely optional flavor — the clicking works the same
 without paying any attention to it.
+
+<p align="center">
+  <img src="docs/screenshots/pokemon.png" width="49%" alt="A Pokémon popping out of a clicked link">
+  <img src="docs/screenshots/pokedex.png" width="49%" alt="The Pokédex window">
+</p>
 
 Each click has a chance to summon a Pokémon right where the hint label was — guaranteed on your first click of the
 day, then about one in three.
@@ -57,8 +73,8 @@ day, then about one in three.
   met are black silhouettes; the ones you have show how many times you've met them. New arrivals get a red dot until
   you open the Pokédex.
 
-Sprites and names come from [PokéAPI](https://pokeapi.co) and are downloaded on first use into
-`~/Library/Caches/Pokey`. None of them are shipped in this repository.
+Sprites and names come from [PokéAPI](https://pokeapi.co). The app doesn't bundle any of them — it downloads them on
+first use into `~/Library/Caches/Pokey`.
 
 ## Install
 
@@ -94,6 +110,8 @@ echo "Developer ID Application: Your Name (TEAMID)" > .signing-identity
 Debug helpers: `.build/release/Pokey --dump <bundle id>` prints how many targets Pokey finds in an app (add
 `REGION=x,y,w,h` to list the ones inside a rectangle), and
 `defaults write com.seongwoon.hintclick forceShinyNext -bool true` makes the next pop a shiny without recording it.
+The screenshots above come from `Pokey --shot <bundle id> <dir>`, which draws each mode over a capture of that app's
+window (`<dir>/base.png`) without showing anything on screen.
 
 ## Credits
 
