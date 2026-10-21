@@ -14,8 +14,8 @@ Pokey is a tiny menu bar app that lets you click anything on macOS without touch
 menu bar items, status icons, even a random spot on a canvas. And every so often, a wild Pokémon pops out of the
 thing you just clicked. Gotta click 'em all.
 
-It started as a weekend replacement for [Homerow](https://www.homerow.app) and [Scoot](https://github.com/mjrusso/scoot),
-built by someone who types on an HHKB and refuses to reach for the trackpad.
+Inspired by [Homerow](https://www.homerow.app) and [Scoot](https://github.com/mjrusso/scoot), and built by someone who
+types on an HHKB and refuses to reach for the trackpad.
 
 ## What it does
 
@@ -87,8 +87,7 @@ Debug helpers: `.build/release/Pokey --dump <bundle id>` prints how many targets
 
 ## Credits
 
-- [Homerow](https://www.homerow.app), [Vimac](https://github.com/dexterleng/vimac) and
-  [Scoot](https://github.com/mjrusso/scoot) for showing how good keyboard clicking can feel.
+- Inspired by [Homerow](https://www.homerow.app) and [Scoot](https://github.com/mjrusso/scoot).
 - [PokéAPI](https://pokeapi.co) and its [sprites](https://github.com/PokeAPI/sprites) repository.
 
 Pokémon and Pokémon character names are trademarks of Nintendo, Creatures Inc. and GAME FREAK Inc. Pokey is an
