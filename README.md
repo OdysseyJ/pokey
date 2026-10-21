@@ -4,7 +4,7 @@
 
 <h1 align="center">Pokey</h1>
 
-<p align="center"><b>Move, click and scroll your Mac from the keyboard.</b></p>
+<p align="center"><b>Control your Mac without a mouse — and collect Pokémon along the way.</b></p>
 
 Pokey is a small menu bar app that turns the keyboard into your mouse. Press a shortcut and every button, link, menu
 bar item and status icon gets a short label — type it and it's clicked. Need a spot that isn't a button? Jump there on
